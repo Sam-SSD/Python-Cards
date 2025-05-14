@@ -22,6 +22,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+
 # Configuración del servidor
 class ServerConfig:
     PORT = 8000
@@ -34,6 +35,9 @@ class ServerConfig:
         "habilidad1": "",
         "habilidad2": "",
         "habilidad3": "",
+        "porcentaje1": "70",
+        "porcentaje2": "80",
+        "porcentaje3": "90",
         "foto_url": "",
         "red_social1": "",
         "red_social2": "",
@@ -42,6 +46,7 @@ class ServerConfig:
         "estilo_fuente": "Arial",
         "plantilla": "1"
     }
+
 
 class HTMLTemplates:
     FORM_HTML = dedent("""
@@ -63,7 +68,7 @@ class HTMLTemplates:
                 </div>
                 <div class="form-group">
                     <label for="apellido">Apellido:</label>
-                    <input id="apellido" name="apellido" required>
+                    <input id="apellido" name="apellido" required>      
                 </div>
                 <div class="form-group">
                     <label for="edad">Edad:</label>
@@ -75,9 +80,18 @@ class HTMLTemplates:
                 </div>
                 <div class="form-group">
                     <label>Habilidades:</label>
-                    <input name="habilidad1" placeholder="Habilidad 1" required>
-                    <input name="habilidad2" placeholder="Habilidad 2" required>
-                    <input name="habilidad3" placeholder="Habilidad 3" required>
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                        <input name="habilidad1" placeholder="Habilidad 1" required style="flex: 2;">
+                        <input name="porcentaje1" type="number" min="0" max="100" placeholder="%" required style="flex: 1; width: 60px;">
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                        <input name="habilidad2" placeholder="Habilidad 2" required style="flex: 2;">
+                        <input name="porcentaje2" type="number" min="0" max="100" placeholder="%" required style="flex: 1; width: 60px;">
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <input name="habilidad3" placeholder="Habilidad 3" required style="flex: 2;">
+                        <input name="porcentaje3" type="number" min="0" max="100" placeholder="%" required style="flex: 1; width: 60px;">
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="foto_url">URL de foto:</label>
@@ -156,7 +170,6 @@ class HTMLTemplates:
                     background: {color_texto};
                     height: 100%;
                     border-radius: 10px;
-                    width: 80%;
                 }}
             </style>
         </head>
@@ -169,12 +182,12 @@ class HTMLTemplates:
 
                 <h2>Habilidades</h2>
                 <div class="skills">
-                    <p>{habilidad1}</p>
-                    <div class="skill-bar"><div class="skill-progress"></div></div>
-                    <p>{habilidad2}</p>
-                    <div class="skill-bar"><div class="skill-progress"></div></div>
-                    <p>{habilidad3}</p>
-                    <div class="skill-bar"><div class="skill-progress"></div></div>
+                    <p>{habilidad1} - {porcentaje1}%</p>
+                    <div class="skill-bar"><div class="skill-progress" style="width: {porcentaje1}%"></div></div>
+                    <p>{habilidad2} - {porcentaje2}%</p>
+                    <div class="skill-bar"><div class="skill-progress" style="width: {porcentaje2}%"></div></div>
+                    <p>{habilidad3} - {porcentaje3}%</p>
+                    <div class="skill-bar"><div class="skill-progress" style="width: {porcentaje3}%"></div></div>
                 </div>
 
                 <h2>Redes Sociales</h2>
@@ -227,7 +240,6 @@ class HTMLTemplates:
                 .skill-progress {{
                     background: linear-gradient(90deg, {color_texto}, #adb5bd);
                     height: 100%;
-                    width: 85%;
                 }}
             </style>
         </head>
@@ -239,12 +251,12 @@ class HTMLTemplates:
 
                 <h2>HABILIDADES</h2>
                 <div class="skills" style="width: 100%;">
-                    <p>{habilidad1}</p>
-                    <div class="skill-bar"><div class="skill-progress"></div></div>
-                    <p>{habilidad2}</p>
-                    <div class="skill-bar"><div class="skill-progress"></div></div>
-                    <p>{habilidad3}</p>
-                    <div class="skill-bar"><div class="skill-progress"></div></div>
+                    <p>{habilidad1} - {porcentaje1}%</p>
+                    <div class="skill-bar"><div class="skill-progress" style="width: {porcentaje1}%"></div></div>
+                    <p>{habilidad2} - {porcentaje2}%</p>
+                    <div class="skill-bar"><div class="skill-progress" style="width: {porcentaje2}%"></div></div>
+                    <p>{habilidad3} - {porcentaje3}%</p>
+                    <div class="skill-bar"><div class="skill-progress" style="width: {porcentaje3}%"></div></div>
                 </div>
 
                 <h2>CONTACTO</h2>
@@ -310,7 +322,6 @@ class HTMLTemplates:
                     background: {color_texto};
                     height: 100%;
                     border-radius: 4px;
-                    width: 90%;
                 }}
                 .social-links {{
                     display: flex;
@@ -338,12 +349,12 @@ class HTMLTemplates:
 
                     <h3>Mis Habilidades</h3>
                     <div class="skills">
-                        <p>{habilidad1}</p>
-                        <div class="skill-bar"><div class="skill-progress"></div></div>
-                        <p>{habilidad2}</p>
-                        <div class="skill-bar"><div class="skill-progress"></div></div>
-                        <p>{habilidad3}</p>
-                        <div class="skill-bar"><div class="skill-progress"></div></div>
+                        <p>{habilidad1} - {porcentaje1}%</p>
+                        <div class="skill-bar"><div class="skill-progress" style="width: {porcentaje1}%"></div></div>
+                        <p>{habilidad2} - {porcentaje2}%</p>
+                        <div class="skill-bar"><div class="skill-progress" style="width: {porcentaje2}%"></div></div>
+                        <p>{habilidad3} - {porcentaje3}%</p>
+                        <div class="skill-bar"><div class="skill-progress" style="width: {porcentaje3}%"></div></div>
                     </div>
 
                     <div class="social-links">
@@ -420,6 +431,7 @@ class HTMLTemplates:
         </div>
     """)
 
+
 class TarjetaHandler(SimpleHTTPRequestHandler):
     def translate_path(self, path: str) -> str:
         # Manejar archivos estáticos
@@ -449,7 +461,7 @@ class TarjetaHandler(SimpleHTTPRequestHandler):
                 super().do_GET()
             else:
                 super().do_GET()
-                
+
         except Exception as e:
             logger.error(f"Error procesando la petición: {str(e)}")
             self._send_error(500, "Error interno del servidor")
@@ -457,25 +469,24 @@ class TarjetaHandler(SimpleHTTPRequestHandler):
     def _handle_home(self) -> None:
         self._send_html(HTMLTemplates.FORM_HTML)
 
-    # Modifica el método _handle_tarjeta en la clase TarjetaHandler
     def _handle_tarjeta(self, parsed) -> None:
         datos = self._parse_query_params(parsed.query)
-        
+
         # Validación básica de datos
         if not self._validar_datos(datos):
             self._send_error(400, "Datos inválidos")
             return
-        
+
         # Seleccionar plantilla según la elección del usuario
-        template = getattr(HTMLTemplates, f"CARD_TEMPLATE_{datos['plantilla']}", 
-                          HTMLTemplates.CARD_TEMPLATE_1)
-        
+        template = getattr(HTMLTemplates, f"CARD_TEMPLATE_{datos['plantilla']}",
+                           HTMLTemplates.CARD_TEMPLATE_1)
+
         # Generar ID único para el perfil
         perfil_id = self._generar_id_unico()
-        
+
         # Guardar el perfil
         self._guardar_perfil(perfil_id, datos)
-        
+
         # Modificar la plantilla para agregar el enlace de compartir
         html_content = template.format(**datos)
         html_content = html_content.replace(
@@ -485,7 +496,7 @@ class TarjetaHandler(SimpleHTTPRequestHandler):
             f'<button onclick="navigator.clipboard.writeText(window.location.origin + \'/perfil/{perfil_id}\');">'
             f'Copiar enlace al perfil</button></p>'
         )
-        
+
         # Enviar la respuesta
         self._send_html(html_content)
 
@@ -508,6 +519,11 @@ class TarjetaHandler(SimpleHTTPRequestHandler):
                 return False
             if not all([datos['habilidad1'], datos['habilidad2'], datos['habilidad3']]):
                 return False
+            # Validar porcentajes
+            for i in range(1, 4):
+                porcentaje = int(datos[f'porcentaje{i}'])
+                if porcentaje < 0 or porcentaje > 100:
+                    return False
             return True
         except ValueError:
             return False
@@ -524,12 +540,12 @@ class TarjetaHandler(SimpleHTTPRequestHandler):
                     perfiles = json.load(f)
             else:
                 perfiles = {}
-            
+
             perfiles[perfil_id] = datos
-            
+
             with open(perfiles_file, 'w') as f:
                 json.dump(perfiles, f, indent=2)
-                
+
         except Exception as e:
             logger.error(f"Error al guardar perfil: {str(e)}")
 
@@ -550,10 +566,8 @@ class TarjetaHandler(SimpleHTTPRequestHandler):
         if not css_path.exists():
             logger.error(f"¡Archivo CSS no encontrado en {css_path}!")
             return False
-
         return True
 
-    # Añade estos métodos a la clase TarjetaHandler
     def _handle_perfiles_list(self):
         """Mostrar la lista de perfiles guardados"""
         try:
@@ -561,7 +575,7 @@ class TarjetaHandler(SimpleHTTPRequestHandler):
             if perfiles_file.exists():
                 with open(perfiles_file, 'r') as f:
                     perfiles = json.load(f)
-                
+
                 perfiles_items = ""
                 for perfil_id, datos in perfiles.items():
                     perfiles_items += HTMLTemplates.PERFIL_ITEM_HTML.format(
@@ -571,7 +585,7 @@ class TarjetaHandler(SimpleHTTPRequestHandler):
                         profesion=datos.get('profesion', 'Sin profesión'),
                         foto_url=datos.get('foto_url', '')
                     )
-                
+
                 html_content = HTMLTemplates.PERFILES_LIST_HTML.format(
                     perfiles_items=perfiles_items if perfiles_items else "<p>No hay perfiles guardados</p>"
                 )
@@ -591,12 +605,12 @@ class TarjetaHandler(SimpleHTTPRequestHandler):
             if perfiles_file.exists():
                 with open(perfiles_file, 'r') as f:
                     perfiles = json.load(f)
-                
+
                 if perfil_id in perfiles:
                     datos = perfiles[perfil_id]
-                    plantilla = getattr(HTMLTemplates, f"CARD_TEMPLATE_{datos.get('plantilla', '1')}", 
-                                       HTMLTemplates.CARD_TEMPLATE_1)
-                    
+                    plantilla = getattr(HTMLTemplates, f"CARD_TEMPLATE_{datos.get('plantilla', '1')}",
+                                        HTMLTemplates.CARD_TEMPLATE_1)
+
                     # Modifica la plantilla para agregar botón de compartir
                     html_content = plantilla.format(**datos)
                     html_content = html_content.replace(
@@ -614,6 +628,7 @@ class TarjetaHandler(SimpleHTTPRequestHandler):
         except Exception as e:
             logger.error(f"Error al mostrar perfil {perfil_id}: {str(e)}")
             self._send_error(500, "Error al cargar el perfil")
+
 
 def run_server() -> None:
     try:
@@ -633,6 +648,7 @@ def run_server() -> None:
         logger.info("\n⏹️ Servidor detenido")
     except Exception as e:
         logger.error(f"Error fatal del servidor: {str(e)}")
+
 
 if __name__ == "__main__":
     run_server()
