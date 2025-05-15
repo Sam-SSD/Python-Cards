@@ -99,8 +99,12 @@ class HTMLTemplates:
                 </div>
                 <div class="form-group">
                     <label>Redes Sociales:</label>
-                    <input name="red_social1" placeholder="URL Red Social 1" required>
-                    <input name="red_social2" placeholder="URL Red Social 2" required>
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                        <input name="red_social1" placeholder="Red Social 1" required style="flex: 2;">
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <input name="red_social2" placeholder="Red Social 2" required style="flex: 2;">
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="color_fondo">Color de fondo:</label>
