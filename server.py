@@ -49,6 +49,61 @@ class ServerConfig:
 
 
 class HTMLTemplates:
+    INDEX_HTML = dedent("""
+        <!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Generador de Perfiles - Inicio</title>
+            <link rel="stylesheet" href="/static/style.css">
+            <style>
+                .main-menu {
+                    max-width: 800px;
+                    margin: 50px auto;
+                    text-align: center;
+                    padding: 2rem;
+                }
+                .menu-options {
+                    display: flex;
+                    justify-content: center;
+                    gap: 2rem;
+                    margin-top: 2rem;
+                }
+                .menu-option {
+                    background: #007bff;
+                    color: white;
+                    padding: 1.5rem 3rem;
+                    border-radius: 10px;
+                    text-decoration: none;
+                    transition: background-color 0.3s;
+                }
+                .menu-option:hover {
+                    background: #0056b3;
+                }
+                h1 {
+                    color: #333;
+                    margin-bottom: 1.5rem;
+                }
+                .description {
+                    color: #666;
+                    margin-bottom: 2rem;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="main-menu">
+                <h1>Bienvenido al Generador de Perfiles</h1>
+                <p class="description">¿Qué deseas hacer?</p>
+                <div class="menu-options">
+                    <a href="/crear" class="menu-option">Crear Nuevo Perfil</a>
+                    <a href="/perfiles" class="menu-option">Ver Perfiles Guardados</a>
+                </div>
+            </div>
+        </body>
+        </html>
+    """)
+    
     FORM_HTML = dedent("""
     <!DOCTYPE html>
     <html lang="es">
@@ -198,7 +253,7 @@ class HTMLTemplates:
                 <p><a href="{red_social1}">Red Social 1</a></p>
                 <p><a href="{red_social2}">Red Social 2</a></p>
 
-                <p><a href="/">← Crear otro perfil</a></p>
+                <p><a href="/crear">← Crear otro perfil</a> | <a href="/">Volver al inicio</a></p>
             </div>
         </body>
         </html>
@@ -366,7 +421,7 @@ class HTMLTemplates:
                         <a href="{red_social2}" target="_blank">Red Social 2</a>
                     </div>
 
-                    <p><a href="/">← Crear otro perfil</a></p>
+                    <p><a href="/crear">← Crear otro perfil</a> | <a href="/">Volver al inicio</a></p>
                 </div>
             </div>
         </body>
@@ -413,7 +468,7 @@ class HTMLTemplates:
         <body>
             <div class="perfiles-lista">
                 <h1>Perfiles Guardados</h1>
-                <a href="/" class="btn">Crear Nuevo Perfil</a>
+                <a href="/crear" class="btn">Crear Nuevo Perfil</a> | <a href="/" class="btn">Volver al inicio</a>
                 
                 {perfiles_items}
                 
@@ -453,6 +508,10 @@ class TarjetaHandler(SimpleHTTPRequestHandler):
             logger.info(f"Petición recibida: {self.path}")
 
             if parsed.path == "/":
+                # Ahora mostramos el índice en la ruta principal
+                self._send_html(HTMLTemplates.INDEX_HTML)
+            elif parsed.path == "/crear":
+                # La ruta para crear perfiles ahora es /crear
                 self._handle_home()
             elif parsed.path == "/tarjeta":
                 self._handle_tarjeta(parsed)
