@@ -4,17 +4,17 @@ import html
 from pathlib import Path
 from typing import Dict
 import logging
-import json
 import uuid
+
 from validaciones import validar_datos
-
-# Configuración básica
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
-
 from perfil_manager import PerfilManager
 from templates import HTMLTemplates
 
+# Configuración del logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
+# Configuración del servidor
 class ServerConfig:
     PORT = 8000
     ROOT = Path(__file__).parent.resolve()
@@ -27,12 +27,20 @@ class ServerConfig:
         "estilo_fuente": "Arial", "plantilla": "1"
     }
 
-SHARE_LINK_HTML = (
-    '<p><a href="/">← Crear otro perfil</a> | '
-    '<a href="/perfiles">Ver todos los perfiles</a> | '
-    '<button onclick="navigator.clipboard.writeText(window.location.href);">Copiar enlace</button></p>'
-)
+# HTML de botones al final de la tarjeta, que al darle click copian el link al portapapeles y muestran un mensaje de éxito
+SHARE_LINK_HTML = """
+<div style="margin-top: 2rem; text-align: center;">
+    <h3>¡Comparte tu tarjeta!</h3>
+    
+    <button class="btn" onclick="navigator.clipboard.writeText(window.location.href).then(() => {
+        alert('Enlace copiado al portapapeles');
+    })">Copiar enlace</button>
+</div>
 
+
+"""
+
+# Diccionario de plantillas
 PLANTILLAS = {
     "1": HTMLTemplates.CARD_TEMPLATE_1,
     "2": HTMLTemplates.CARD_TEMPLATE_2,
@@ -79,7 +87,7 @@ class TarjetaHandler(SimpleHTTPRequestHandler):
         PerfilManager.guardar_perfil(perfil_id, datos)
 
         html_content = template.format(**datos).replace(
-            '<p><a href="/">← Crear otro perfil</a></p>',
+            '__COMPARTIR_PERFIL__',
             SHARE_LINK_HTML.replace("window.location.href", f"window.location.origin + '/perfil/{perfil_id}'")
         )
         self._send_html(html_content)
@@ -113,7 +121,7 @@ class TarjetaHandler(SimpleHTTPRequestHandler):
             datos = perfiles[perfil_id]
             plantilla = PLANTILLAS.get(datos.get('plantilla', '1'), HTMLTemplates.CARD_TEMPLATE_1)
             html_content = plantilla.format(**datos).replace(
-                '<p><a href="/">← Crear otro perfil</a></p>',
+                '__COMPARTIR_PERFIL__',
                 SHARE_LINK_HTML
             )
             self._send_html(html_content)
@@ -144,7 +152,6 @@ class TarjetaHandler(SimpleHTTPRequestHandler):
     def _check_static_files():
         return (ServerConfig.ROOT / "static" / "style.css").exists()
 
-
 def run_server() -> None:
     try:
         if not TarjetaHandler._check_static_files():
@@ -159,7 +166,6 @@ def run_server() -> None:
         logger.info("\n⏹️ Servidor detenido manualmente")
     except Exception as e:
         logger.error(f"Error fatal del servidor: {e}")
-
 
 if __name__ == "__main__":
     run_server()

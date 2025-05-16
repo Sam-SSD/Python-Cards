@@ -2,60 +2,60 @@ from textwrap import dedent
 
 class HTMLTemplates:
     INDEX_HTML = dedent("""
-        <!DOCTYPE html>
-        <html lang=\"es\">
-        <head>
-            <meta charset=\"utf-8\">
-            <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
-            <title>Generador de Perfiles - Inicio</title>
-            <link rel=\"icon\" href=\"/static/favicon.ico\" type=\"image/x-icon\">
-            <link rel=\"stylesheet\" href=\"/static/style.css\">
-            <style>
-                .main-menu {
-                    max-width: 800px;
-                    margin: 50px auto;
-                    text-align: center;
-                    padding: 2rem;
-                }
-                .menu-options {
-                    display: flex;
-                    justify-content: center;
-                    gap: 2rem;
-                    margin-top: 2rem;
-                }
-                .menu-option {
-                    background: #007bff;
-                    color: white;
-                    padding: 1.5rem 3rem;
-                    border-radius: 10px;
-                    text-decoration: none;
-                    transition: background-color 0.3s;
-                }
-                .menu-option:hover {
-                    background: #0056b3;
-                }
-                h1 {
-                    color: #333;
-                    margin-bottom: 1.5rem;
-                }
-                .description {
-                    color: #666;
-                    margin-bottom: 2rem;
-                }
-            </style>
-        </head>
-        <body>
-            <div class=\"main-menu\">
-                <h1>Bienvenido al Generador de Perfiles</h1>
-                <p class=\"description\">¿Qué deseas hacer?</p>
-                <div class=\"menu-options\">
-                    <a href=\"/crear\" class=\"menu-option\">Crear Nuevo Perfil</a>
-                    <a href=\"/perfiles\" class=\"menu-option\">Ver Perfiles Guardados</a>
+            <!DOCTYPE html>
+            <html lang="es">
+            <head>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Generador de Perfiles - Inicio</title>
+                <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+                <link rel="stylesheet" href="/static/style.css">
+                <style>
+                    .main-menu {
+                        max-width: 800px;
+                        margin: 50px auto;
+                        text-align: center;
+                        padding: 2rem;
+                    }
+                    .menu-options {
+                        display: flex;
+                        justify-content: center;
+                        gap: 2rem;
+                        margin-top: 2rem;
+                    }
+                    .menu-option {
+                        background: #007bff;
+                        color: white;
+                        padding: 1.5rem 3rem;
+                        border-radius: 10px;
+                        text-decoration: none;
+                        transition: background-color 0.3s;
+                    }
+                    .menu-option:hover {
+                        background: #0056b3;
+                    }
+                    h1 {
+                        color: #333;
+                        margin-bottom: 1.5rem;
+                    }
+                    .description {
+                        color: #666;
+                        margin-bottom: 2rem;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="main-menu">
+                    <h1>Bienvenido al Generador de Perfiles</h1>
+                    <p class="description">¿Qué deseas hacer?</p>
+                    <div class="menu-options">
+                        <a href="/crear" class="menu-option">Crear Nuevo Perfil</a>
+                        <a href="/perfiles" class="menu-option">Ver Perfiles Guardados</a>
+                    </div>
                 </div>
-            </div>
-        </body>
-        </html>
-    """)
+            </body>
+            </html>
+        """)
 
     FORM_HTML = dedent("""
         <!DOCTYPE html>
@@ -141,6 +141,9 @@ class HTMLTemplates:
                     </div>
                     <button type=\"submit\">Crear Perfil</button>
                 </form>
+                <p style="text-align: center; margin-top: 2rem;">
+                    <a href="/" class="btn secondary">← Volver al inicio</a>
+                </p>
             </div>
         </body>
         </html>
@@ -209,7 +212,13 @@ class HTMLTemplates:
                     <p><a href=\"{red_social1}\">Red Social 1</a></p>
                     <p><a href=\"{red_social2}\">Red Social 2</a></p>
 
-                    <p><a href=\"/crear\">← Crear otro perfil</a> | <a href=\"/\">Volver al inicio</a></p>
+                        <p>__COMPARTIR_PERFIL__</p>
+                    </div>
+                    
+                </div>
+                <div style="margin-top: 1rem; text-align: center;">
+                        <a href="/" class="btn secondary">Volver al inicio</a>
+                </div>
                 </div>
             </body>
             </html>
@@ -281,8 +290,12 @@ class HTMLTemplates:
                         <a href=\"{red_social1}\" target=\"_blank\">Red Social 1</a>
                         <a href=\"{red_social2}\" target=\"_blank\">Red Social 2</a>
                     </div>
-
-                    <p style=\"margin-top: 30px;\"><a href=\"/\">← Crear otro perfil</a></p>
+                        <p>__COMPARTIR_PERFIL__</p>
+                    </div>
+                    
+                </div>
+                <div style="margin-top: 1rem; text-align: center;">
+                        <a href="/" class="btn secondary">Volver al inicio</a>
                 </div>
             </body>
             </html>
@@ -380,9 +393,12 @@ class HTMLTemplates:
                             <a href=\"{red_social1}\" target=\"_blank\">Red Social 1</a>
                             <a href=\"{red_social2}\" target=\"_blank\">Red Social 2</a>
                         </div>
-
-                        <p><a href=\"/crear\">← Crear otro perfil</a> | <a href=\"/\">Volver al inicio</a></p>
+                        <p>__COMPARTIR_PERFIL__</p>
                     </div>
+                    
+                </div>
+                <div style="margin-top: 1rem; text-align: center;">
+                        <a href="/" class="btn secondary">Volver al inicio</a>
                 </div>
             </body>
             </html>
@@ -390,52 +406,64 @@ class HTMLTemplates:
         )
 
     PERFILES_LIST_HTML = dedent("""
-            <!DOCTYPE html>
-            <html lang=\"es\">
-            <head>
-                <meta charset=\"utf-8\">
-                <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
-                <title>Perfiles Guardados</title>
-                <link rel=\"icon\" href=\"/static/favicon.ico\" type=\"image/x-icon\">
-                <link rel=\"stylesheet\" href=\"/static/style.css\">
-                <style>
-                    .perfiles-lista {{
-                        max-width: 800px;
-                        margin: 0 auto;
-                        padding: 2rem;
-                    }}
-                    .perfil-item {{
-                        background: white;
-                        padding: 1rem;
-                        margin-bottom: 1rem;
-                        border-radius: 8px;
-                        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-                        display: flex;
-                        align-items: center;
-                    }}
-                    .perfil-item img {{
-                        width: 60px;
-                        height: 60px;
-                        border-radius: 50%;
-                        margin-right: 1rem;
-                    }}
-                    .perfil-item h3 {{
-                        margin: 0;
-                    }}
-                    .perfil-actions {{
-                        margin-left: auto;
-                    }}
-                </style>
-            </head>
-            <body>
-                <div class=\"perfiles-lista\">
-                    <h1>Perfiles Guardados</h1>
-                    <a href=\"/crear\" class=\"btn\">Crear Nuevo Perfil</a> | <a href=\"/\" class=\"btn\">Volver al inicio</a>
+        <!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Perfiles Guardados</title>
+            <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+            <link rel="stylesheet" href="/static/style.css">
+            <style>
+                .perfiles-lista {{
+                    max-width: 800px;
+                    margin: 0 auto;
+                    padding: 2rem;
+                }}
+                .perfil-item {{
+                    background: white;
+                    padding: 1rem;
+                    margin-bottom: 1rem;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                    display: flex;
+                    align-items: center;
+                }}
+                .perfil-item img {{
+                    width: 60px;
+                    height: 60px;
+                    border-radius: 50%;
+                    margin-right: 1rem;
+                }}
+                .perfil-item h3 {{
+                    margin: 0;
+                }}
+                .perfil-actions {{
+                    margin-left: auto;
+                }}
+            </style>
+        </head>
+        <body>
+            <div class="perfiles-lista">
+                <h1>Perfiles Guardados</h1>
+                <a href="/crear" class="btn">Crear Nuevo Perfil</a> <a href="/" class="btn secondary">Volver al inicio</a>
+                <h2>Lista de Perfiles</h2>
+                {perfiles_items}
+            </div>
+        </body>
+        </html>
+    """)
 
-                    {perfiles_items}
-
+    PERFIL_ITEM_HTML = dedent("""
+            <div class="perfil-item">
+                <img src="{foto_url}" alt="{nombre}">
+                <div>
+                    <h3>{nombre} {apellido}</h3>
+                    <p>{profesion}</p>
                 </div>
-            </body>
-            </html>
+                <div class="perfil-actions">
+                    <a href="/perfil/{id}" class="btn secondary">Ver Perfil</a>
+                </div>
+            </div>
         """
         )
