@@ -93,9 +93,7 @@ class TarjetaHandler(SimpleHTTPRequestHandler):
     def _handle_eliminar_perfil(self, perfil_id):
         try:
             PerfilManager.eliminar_perfil(perfil_id)
-            self.send_response(303)
-            self.send_header("Location", "/perfiles")
-            self.end_headers()
+            self._send_html(HTMLTemplates.ELIMINADO_HTML)
         except Exception as e:
             logger.error(f"Error eliminando perfil {perfil_id}: {e}")
             self._send_error(500, "Error al eliminar el perfil")
@@ -109,6 +107,7 @@ class TarjetaHandler(SimpleHTTPRequestHandler):
         template = PLANTILLAS.get(datos['plantilla'], HTMLTemplates.CARD_TEMPLATE_1)
         perfil_id = str(uuid.uuid4())
         PerfilManager.guardar_perfil(perfil_id, datos)
+
 
         html_content = template.format(**datos).replace(
             '__COMPARTIR_PERFIL__',

@@ -1,52 +1,94 @@
-# Generador de Tarjetas Personalizadas
+# 🧑‍💻 Generador de Perfiles Personales
 
-Este es un proyecto simple que permite a los usuarios crear tarjetas personalizadas con su nombre, una breve biografía y un color favorito.
+### 📘 English version
 
-## Descripción
+[Click here to see the README in English](README_EN.md)
 
-El proyecto consiste en un servidor web minimalista que ofrece:
-- Un formulario HTML para ingresar los datos personales
-- Una página de tarjeta generada con los datos proporcionados
-- Archivos estáticos (CSS, imágenes, etc.)
+---
 
-## Requisitos
+![Banner](https://img.shields.io/badge/Python-3.12-blue?style=flat&logo=python) ![Estado](https://img.shields.io/badge/Proyecto-Completo-success)  
+**Versión mejorada del generador de tarjetas, ahora con perfiles personalizables, plantillas visuales y gestión de datos.**
 
-- Python 3.x
+---
 
-## Cómo usar
+## 🎯 Descripción
 
-1. Clona o descarga este repositorio
+Este proyecto permite generar perfiles personales interactivos con diseño visual atractivo y múltiples plantillas. El sistema está desarrollado usando únicamente Python, HTML y CSS sin frameworks adicionales.
 
-2. Ejecuta el servidor:
+---
+
+## 🛠️ Funcionalidades
+
+✅ Formulario interactivo para ingresar datos del perfil  
+✅ 3 plantillas de diseño visual para elegir  
+✅ Personalización de colores, fuentes y fondo  
+✅ Vista previa con barras de habilidades animadas  
+✅ Enlace compartible para cada perfil  
+✅ Listado dinámico de perfiles creados  
+✅ Eliminación de perfiles con confirmación  
+✅ Estilo visual adaptable y responsive
+
+---
+
+## 🧩 Bonus Implementados
+
+- ✅ Guardado de perfiles con UUID en archivo JSON
+- ✅ Vista individual de perfiles (`/perfil/<id>`)
+- ✅ Eliminación directa desde la lista
+- ✅ Botón para copiar enlace del perfil
+- ✅ Feedback visual con alertas
+
+---
+
+## 📂 Estructura del Proyecto
+
+```
+📁 /static
+    └── style.css
+    └── favicon.ico
+📄 templates.html
+📄 server.py
+📄 perfil_manager.py
+📄 storage.py
+📄 validaciones.py
+📄 perfiles.json
+```
+
+---
+
+## 🚀 Instrucciones para Ejecutar
+
+1. Asegúrate de tener **Python 3.10 o superior** instalado.
+2. Clona este repositorio desde GitHub:
+
+   ```bash
+   git clone https://github.com/Sam-SSD/Python-Cards.git
    ```
+
+3. Navega al directorio del proyecto:
+
+   ```bash
+   cd Python-Cards
+   ```
+
+4. Ejecuta el sistema desde el archivo principal:
+
+   ```bash
    python server.py
    ```
+5. Abre tu navegador y visita la URL:
 
-3. Abre tu navegador web y visita:
-   ```
-   http://localhost:8000
-   ```
+   ```bash
+    http://localhost:8000
+    ```
 
-4. En el formulario, ingresa:
-   - Tu nombre
-   - Una breve biografía
-   - Tu color favorito (en formato hexadecimal)
+6. ¡Listo! Ahora puedes crear y gestionar tus perfiles personales.
+---
 
-5. Haz clic en "Crear tarjeta" para ver tu tarjeta personalizada
+## 📸 Vista Previa
 
-## Estructura del proyecto
+| Formulario | Tarjeta 1 | Tarjeta 2 | Listado |
+|-----------|-----------|-----------|---------|
+| ![form](https://imgur.com/formulario.png) | ![card1](https://imgur.com/card1.png) | ![card2](https://imgur.com/card2.png) | ![listado](https://imgur.com/listado.png) |
 
-- `server.py`: El servidor web que maneja las peticiones y genera las tarjetas
-
-
-## Características
-
-- Servidor HTTP simple basado en Python
-- Generación dinámica de HTML
-- Sanitización de entradas para prevenir inyecciones HTML
-- Diseño responsivo con CSS
-
-## Personalización
-
-Puedes personalizar el aspecto de las tarjetas modificando:
-- Las plantillas HTML en `server.py`
+---

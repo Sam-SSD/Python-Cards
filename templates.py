@@ -471,13 +471,11 @@ class HTMLTemplates:
             function eliminarPerfil(id) {{
                 if (confirm('¿Estás seguro de eliminar este perfil?')) {{
                     fetch('/eliminar/' + id, {{ method: 'POST' }})
-                        .then(response => {{
-                            if (response.ok) {{
-                                alert('Perfil eliminado correctamente');
-                                window.location.reload();
-                            }} else {{
-                                alert('Error al eliminar el perfil');
-                            }}
+                        .then(response => response.text())
+                        .then(html => {{
+                            document.open();
+                            document.write(html);
+                            document.close();
                         }})
                         .catch(err => {{
                             alert('Error de conexión');
@@ -487,4 +485,23 @@ class HTMLTemplates:
             }}
         </script>
     """)
+
+    ELIMINADO_HTML = dedent("""
+        <!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="utf-8">
+            <title>Perfil Eliminado</title>
+            <link rel="stylesheet" href="/static/style.css">
+        </head>
+        <body>
+            <div class="container" style="text-align:center; padding: 3rem;">
+                <h1>🗑️ Perfil eliminado exitosamente</h1>
+                <p>Has eliminado el perfil seleccionado.</p>
+                <a href="/perfiles" class="btn secondary">Volver al listado</a>
+            </div>
+        </body>
+        </html>
+    """)
+
 

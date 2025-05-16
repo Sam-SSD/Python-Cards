@@ -1,6 +1,6 @@
 {
   "8132c4a1-c6da-4feb-be55-3b41d92d2732": {
-    "nombre": "Samuel",
+    "nombre": "Sam",
     "apellido": "SD",
     "edad": "20",
     "profesion": "Backend Developer",
@@ -15,25 +15,6 @@
     "red_social2": "https://github.com/Sam-SSD",
     "color_fondo": "#ff8585",
     "color_texto": "#5a1c1c",
-    "estilo_fuente": "Arial",
-    "plantilla": "3"
-  },
-  "fb447247-4967-4b08-a16f-08c1e38bb257": {
-    "nombre": "Sam",
-    "apellido": "SD",
-    "edad": "20",
-    "profesion": "Dev",
-    "habilidad1": "correr",
-    "habilidad2": "developear",
-    "habilidad3": "saltar",
-    "porcentaje1": "50",
-    "porcentaje2": "70",
-    "porcentaje3": "80",
-    "foto_url": "https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=1&amp;w=500",
-    "red_social1": "https://github.com/Sam-SSD",
-    "red_social2": "https://github.com/Sam-SSD",
-    "color_fondo": "#682c2c",
-    "color_texto": "#ac6262",
     "estilo_fuente": "Arial",
     "plantilla": "3"
   }
