@@ -122,6 +122,17 @@ button:active,
     color: white;
 }
 
+.btn.delete {
+    background: transparent;
+    color: #e74c3c;
+    border: 2px solid #e74c3c;
+}
+
+.btn.delete:hover {
+    background: #e74c3c;
+    color: white;
+}
+
 /* Tarjeta */
 .card,
 .profile-card {

@@ -1,5 +1,6 @@
 from textwrap import dedent
 
+
 class HTMLTemplates:
     INDEX_HTML = dedent("""
             <!DOCTYPE html>
@@ -148,7 +149,7 @@ class HTMLTemplates:
         </body>
         </html>
     """
-    )
+                       )
 
     CARD_TEMPLATE_1 = dedent("""
             <!DOCTYPE html>
@@ -223,7 +224,7 @@ class HTMLTemplates:
             </body>
             </html>
         """
-        )
+                             )
 
     CARD_TEMPLATE_2 = dedent("""
             <!DOCTYPE html>
@@ -300,7 +301,7 @@ class HTMLTemplates:
             </body>
             </html>
         """
-        )
+                             )
 
     CARD_TEMPLATE_3 = dedent("""
             <!DOCTYPE html>
@@ -403,7 +404,7 @@ class HTMLTemplates:
             </body>
             </html>
         """
-        )
+                             )
 
     PERFILES_LIST_HTML = dedent("""
         <!DOCTYPE html>
@@ -455,15 +456,35 @@ class HTMLTemplates:
     """)
 
     PERFIL_ITEM_HTML = dedent("""
-            <div class="perfil-item">
-                <img src="{foto_url}" alt="{nombre}">
-                <div>
-                    <h3>{nombre} {apellido}</h3>
-                    <p>{profesion}</p>
-                </div>
-                <div class="perfil-actions">
-                    <a href="/perfil/{id}" class="btn secondary">Ver Perfil</a>
-                </div>
+        <div class="perfil-item">
+            <img src="{foto_url}" alt="{nombre}">
+            <div>
+                <h3>{nombre} {apellido}</h3>
+                <p>{profesion}</p>
             </div>
-        """
-        )
+            <div class="perfil-actions">
+                <a href="/perfil/{id}" class="btn secondary" style="margin-right: 10px;">Ver Perfil</a>
+                <a href="#" class="btn delete" onclick="eliminarPerfil('{id}'); return false;">Eliminar</a>
+            </div>
+        </div>
+        <script>
+            function eliminarPerfil(id) {{
+                if (confirm('¿Estás seguro de eliminar este perfil?')) {{
+                    fetch('/eliminar/' + id, {{ method: 'POST' }})
+                        .then(response => {{
+                            if (response.ok) {{
+                                alert('Perfil eliminado correctamente');
+                                window.location.reload();
+                            }} else {{
+                                alert('Error al eliminar el perfil');
+                            }}
+                        }})
+                        .catch(err => {{
+                            alert('Error de conexión');
+                            console.error(err);
+                        }});
+                }}
+            }}
+        </script>
+    """)
+

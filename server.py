@@ -5,16 +5,17 @@ from pathlib import Path
 from typing import Dict
 import logging
 import uuid
+import json
 
 from validaciones import validar_datos
 from perfil_manager import PerfilManager
 from templates import HTMLTemplates
 
-# Configuración del logging
+# Configuración de logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-# Configuración del servidor
+
 class ServerConfig:
     PORT = 8000
     ROOT = Path(__file__).parent.resolve()
@@ -30,22 +31,21 @@ class ServerConfig:
 # HTML de botones al final de la tarjeta, que al darle click copian el link al portapapeles y muestran un mensaje de éxito
 SHARE_LINK_HTML = """
 <div style="margin-top: 2rem; text-align: center;">
-    <h3>¡Comparte tu tarjeta!</h3>
-    
+    <h3>¡Comparte tu perfil!</h3>
     <button class="btn" onclick="navigator.clipboard.writeText(window.location.href).then(() => {
-        alert('Enlace copiado al portapapeles');
-    })">Copiar enlace</button>
+        alert('¡Enlace copiado al portapapeles!');
+    }).catch(err => {
+        console.error('Error al copiar el enlace: ', err);
+    });">Copiar enlace</button>
 </div>
-
-
 """
 
-# Diccionario de plantillas
 PLANTILLAS = {
     "1": HTMLTemplates.CARD_TEMPLATE_1,
     "2": HTMLTemplates.CARD_TEMPLATE_2,
     "3": HTMLTemplates.CARD_TEMPLATE_3
 }
+
 
 class TarjetaHandler(SimpleHTTPRequestHandler):
     def translate_path(self, path: str) -> str:
@@ -56,7 +56,7 @@ class TarjetaHandler(SimpleHTTPRequestHandler):
     def do_GET(self) -> None:
         try:
             parsed = up.urlparse(self.path)
-            logger.info(f"Petición recibida: {self.path}")
+            logger.info(f"Petición GET: {self.path}")
 
             if parsed.path == "/":
                 self._send_html(HTMLTemplates.INDEX_HTML)
@@ -73,8 +73,32 @@ class TarjetaHandler(SimpleHTTPRequestHandler):
             else:
                 self._send_error(404, "Ruta no encontrada")
         except Exception as e:
-            logger.error(f"Error: {e}")
+            logger.error(f"Error en GET: {e}")
             self._send_error(500, "Error interno del servidor")
+
+    def do_POST(self) -> None:
+        try:
+            parsed = up.urlparse(self.path)
+            logger.info(f"Petición POST: {self.path}")
+
+            if parsed.path.startswith("/eliminar/"):
+                perfil_id = parsed.path.split("/")[-1]
+                self._handle_eliminar_perfil(perfil_id)
+            else:
+                self._send_error(404, "Ruta POST no encontrada")
+        except Exception as e:
+            logger.error(f"Error en POST: {e}")
+            self._send_error(500, "Error interno del servidor")
+
+    def _handle_eliminar_perfil(self, perfil_id):
+        try:
+            PerfilManager.eliminar_perfil(perfil_id)
+            self.send_response(303)
+            self.send_header("Location", "/perfiles")
+            self.end_headers()
+        except Exception as e:
+            logger.error(f"Error eliminando perfil {perfil_id}: {e}")
+            self._send_error(500, "Error al eliminar el perfil")
 
     def _handle_tarjeta(self, parsed) -> None:
         datos = self._parse_query_params(parsed.query)
@@ -152,6 +176,7 @@ class TarjetaHandler(SimpleHTTPRequestHandler):
     def _check_static_files():
         return (ServerConfig.ROOT / "static" / "style.css").exists()
 
+
 def run_server() -> None:
     try:
         if not TarjetaHandler._check_static_files():
@@ -166,6 +191,7 @@ def run_server() -> None:
         logger.info("\n⏹️ Servidor detenido manualmente")
     except Exception as e:
         logger.error(f"Error fatal del servidor: {e}")
+
 
 if __name__ == "__main__":
     run_server()
