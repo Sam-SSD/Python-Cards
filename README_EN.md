@@ -81,6 +81,6 @@ Create dynamic and styled personal profiles with visual templates using only Pyt
 
 | Form | Card 1 | Card 2 | List |
 |------|--------|--------|------|
-| ![form](https://imgur.com/formulario.png) | ![card1](https://imgur.com/card1.png) | ![card2](https://imgur.com/card2.png) | ![listado](https://imgur.com/listado.png) |
+| ![form](https://github.com/user-attachments/assets/199b01ad-a534-46af-abdb-831e3be82ee6) | ![card1](https://github.com/user-attachments/assets/c410af39-a1cc-45a6-95cd-48373ab815fc) | ![card2](https://github.com/user-attachments/assets/c518c977-f40c-4ba0-b30c-3c00f73acb14) | ![listado](https://github.com/user-attachments/assets/7b5f1e6e-2dec-409b-be1e-840716e3038b) 
 
 ---
