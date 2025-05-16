@@ -6,13 +6,14 @@ from typing import Dict
 import logging
 import json
 import uuid
-from urllib.parse import urlparse
+from validaciones import validar_datos
 
 # Configuración básica
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 from perfil_manager import PerfilManager
+from templates import HTMLTemplates
 
 class ServerConfig:
     PORT = 8000
@@ -32,7 +33,11 @@ SHARE_LINK_HTML = (
     '<button onclick="navigator.clipboard.writeText(window.location.href);">Copiar enlace</button></p>'
 )
 
-from templates import HTMLTemplates
+PLANTILLAS = {
+    "1": HTMLTemplates.CARD_TEMPLATE_1,
+    "2": HTMLTemplates.CARD_TEMPLATE_2,
+    "3": HTMLTemplates.CARD_TEMPLATE_3
+}
 
 class TarjetaHandler(SimpleHTTPRequestHandler):
     def translate_path(self, path: str) -> str:
@@ -65,11 +70,11 @@ class TarjetaHandler(SimpleHTTPRequestHandler):
 
     def _handle_tarjeta(self, parsed) -> None:
         datos = self._parse_query_params(parsed.query)
-        if not self._validar_datos(datos):
+        if not validar_datos(datos):
             self._send_error(400, "Datos inválidos")
             return
 
-        template = getattr(HTMLTemplates, f"CARD_TEMPLATE_{datos['plantilla']}", HTMLTemplates.CARD_TEMPLATE_1)
+        template = PLANTILLAS.get(datos['plantilla'], HTMLTemplates.CARD_TEMPLATE_1)
         perfil_id = str(uuid.uuid4())
         PerfilManager.guardar_perfil(perfil_id, datos)
 
@@ -106,7 +111,7 @@ class TarjetaHandler(SimpleHTTPRequestHandler):
                 return
 
             datos = perfiles[perfil_id]
-            plantilla = getattr(HTMLTemplates, f"CARD_TEMPLATE_{datos.get('plantilla', '1')}", HTMLTemplates.CARD_TEMPLATE_1)
+            plantilla = PLANTILLAS.get(datos.get('plantilla', '1'), HTMLTemplates.CARD_TEMPLATE_1)
             html_content = plantilla.format(**datos).replace(
                 '<p><a href="/">← Crear otro perfil</a></p>',
                 SHARE_LINK_HTML
@@ -122,32 +127,6 @@ class TarjetaHandler(SimpleHTTPRequestHandler):
             key: html.escape(params.get(key, [default])[0])
             for key, default in ServerConfig.DEFAULT_VALUES.items()
         }
-
-    def _es_url_valida(self, url: str) -> bool:
-        try:
-            resultado = urlparse(url)
-            return all([resultado.scheme, resultado.netloc])
-        except:
-            return False
-
-    def _validar_datos(self, datos: Dict[str, str]) -> bool:
-        def es_entero_entre(valor, min_v, max_v):
-            try:
-                return min_v <= int(valor) <= max_v
-            except ValueError:
-                return False
-
-        obligatorios = ['nombre', 'apellido', 'profesion', 'edad']
-        if not all(datos.get(k) for k in obligatorios):
-            return False
-        if not es_entero_entre(datos['edad'], 0, 150):
-            return False
-        if not self._es_url_valida(datos.get('foto_url', '')):
-            return False
-        for i in range(1, 4):
-            if not datos.get(f"habilidad{i}") or not es_entero_entre(datos.get(f"porcentaje{i}"), 0, 100):
-                return False
-        return True
 
     def _send_html(self, contenido: str, status: int = 200) -> None:
         self.send_response(status)

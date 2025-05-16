@@ -8,6 +8,7 @@ class HTMLTemplates:
             <meta charset=\"utf-8\">
             <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
             <title>Generador de Perfiles - Inicio</title>
+            <link rel=\"icon\" href=\"/static/favicon.ico\" type=\"image/x-icon\">
             <link rel=\"stylesheet\" href=\"/static/style.css\">
             <style>
                 .main-menu {
@@ -54,8 +55,7 @@ class HTMLTemplates:
             </div>
         </body>
         </html>
-    """
-    )
+    """)
 
     FORM_HTML = dedent("""
         <!DOCTYPE html>
@@ -64,6 +64,7 @@ class HTMLTemplates:
             <meta charset=\"utf-8\">
             <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
             <title>Genera tu perfil</title>
+            <link rel=\"icon\" href=\"/static/favicon.ico\" type=\"image/x-icon\">
             <link rel=\"stylesheet\" href=\"/static/style.css\">
         </head>
         <body>
@@ -152,6 +153,7 @@ class HTMLTemplates:
             <head>
                 <meta charset=\"utf-8\">
                 <title>Perfil de {nombre}</title>
+                <link rel=\"icon\" href=\"/static/favicon.ico\" type=\"image/x-icon\">
                 <link rel=\"stylesheet\" href=\"/static/style.css\">
                 <style>
                     body {{ 
@@ -220,6 +222,7 @@ class HTMLTemplates:
             <head>
                 <meta charset=\"utf-8\">
                 <title>Perfil de {nombre}</title>
+                <link rel=\"icon\" href=\"/static/favicon.ico\" type=\"image/x-icon\">                
                 <link rel=\"stylesheet\" href=\"/static/style.css\">
                 <style>
                     body {{ 
@@ -292,6 +295,7 @@ class HTMLTemplates:
             <head>
                 <meta charset=\"utf-8\">
                 <title>Perfil de {nombre}</title>
+                <link rel=\"icon\" href=\"/static/favicon.ico\" type=\"image/x-icon\">
                 <link rel=\"stylesheet\" href=\"/static/style.css\">
                 <style>
                     body {{ 
@@ -392,6 +396,7 @@ class HTMLTemplates:
                 <meta charset=\"utf-8\">
                 <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
                 <title>Perfiles Guardados</title>
+                <link rel=\"icon\" href=\"/static/favicon.ico\" type=\"image/x-icon\">
                 <link rel=\"stylesheet\" href=\"/static/style.css\">
                 <style>
                     .perfiles-lista {{
@@ -432,19 +437,5 @@ class HTMLTemplates:
                 </div>
             </body>
             </html>
-        """
-        )
-
-    PERFIL_ITEM_HTML = dedent("""
-            <div class=\"perfil-item\">
-                <img src=\"{foto_url}\" alt=\"{nombre}\">
-                <div>
-                    <h3>{nombre} {apellido}</h3>
-                    <p>{profesion}</p>
-                </div>
-                <div class=\"perfil-actions\">
-                    <a href=\"/perfil/{id}\">Ver Perfil</a>
-                </div>
-            </div>
         """
         )
